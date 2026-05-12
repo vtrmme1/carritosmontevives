@@ -607,32 +607,32 @@
   let pendienteHora = null;
 
   function reservar(carrito, hora) {
-    pendienteCarrito = carrito;
-    pendienteHora = hora;
+    const modal = document.getElementById('modal-overlay');
+    modal.dataset.carrito = carrito;
+    modal.dataset.hora = hora;
     document.getElementById('input-clase').value = '';
     document.getElementById('input-clase').style.borderColor = '';
-    const modal = document.getElementById('modal-overlay');
     modal.style.display = 'flex';
-    console.log('reservar', carrito, hora, pendienteCarrito, pendienteHora);
     setTimeout(() => document.getElementById('input-clase').focus(), 100);
   }
 
   function cerrarModal() {
     document.getElementById('modal-overlay').style.display = 'none';
-    pendienteCarrito = null;
-    pendienteHora = null;
   }
 
   async function confirmarReserva() {
+    const modal = document.getElementById('modal-overlay');
+    const carrito = modal.dataset.carrito;
+    const hora = parseInt(modal.dataset.hora);
     const clase = document.getElementById('input-clase').value.trim();
     if (!clase) { document.getElementById('input-clase').style.borderColor = 'var(--danger)'; return; }
     cerrarModal();
     showLoading(true);
     const { error } = await sb.from('reserva').insert({
       email_profesor: currentUser.email,
-      nombre_carrito: pendienteCarrito,
+      nombre_carrito: carrito,
       fecha: dateStr(),
-      hora: pendienteHora,
+      hora: hora,
       clase: clase
     });
     showLoading(false);
