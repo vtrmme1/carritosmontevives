@@ -458,8 +458,9 @@
   const SUPABASE_URL = 'https://watfacnytmjzjrdurrrr.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhdGZhY255dG1qempyZHVycnJyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1NzQ1MDksImV4cCI6MjA5NDE1MDUwOX0.F8VfB0LOlbxXY_hy5ZvuZIALVuuJ3PM-3aZuJnN4oLw';
 
-  const { createClient } = supabase;
-  const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+  auth: { persistSession: true }
+});
 
   const HORAS = [
     { num: 1, label: '1ª', time: '08:15-09:15', inicio: [8,15] },
